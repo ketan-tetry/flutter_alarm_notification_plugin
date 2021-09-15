@@ -1,7 +1,6 @@
 name: flutter_notification_plugin
 description: A new Flutter Notification plugin.
-version: 0.0.1
-author: Ketan Tetry
+version: 0.0.2
 repository: https://gitlab.signitysolutions.co.in/ketan/flutter-notification-plugin
 
 environment:

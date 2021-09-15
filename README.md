@@ -40,3 +40,13 @@ To stop the foregound notification
 ```
 
 Add sound file in the android > app > src > main > res > raw > order_recieved.mp3
+
+Add below mentioned code in the android manifest file
+
+```xml
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-sdk
+        android:minSdkVersion="23"
+        tools:overrideLibrary="com.valueappz.flutter_notification_plugin" />
+    <service android:name="com.valueappz.flutter_notification_plugin.FlutterForegroundService" />
+```

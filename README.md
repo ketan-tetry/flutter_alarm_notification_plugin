@@ -4,14 +4,15 @@ Flutter Foregound Notification Plugin for long running operations like continuou
 
 ## Getting Started
 
-Add the plugin in the pubspec file
-```
+1. Add the plugin in the pubspec file
+```dart
+dependencies:
   flutter_notification_plugin:          
     git:
       url: https://github.com/ketansignity/flutter_alarm_notification_plugin
 ```
 
-To start the foreground notification alarm 
+2. To start the foreground notification alarm 
 
 ```dart
   void startForegroundService() async {
@@ -33,20 +34,29 @@ To start the foreground notification alarm
         sound: 'order_recieved');
   }
 ```
-To stop the foregound notification
+3. To stop the foregound notification
 
 ```dart
   await FlutterNotificationPlugin.stopForegroundService();
 ```
 
-Add sound file in the android > app > src > main > res > raw > order_recieved.mp3
+4. Add sound file in the android folder
+> app > src > main > res > raw > order_recieved.mp3
 
-Add below mentioned code in the android manifest file
+5. Add permission in the android manifest file
 
 ```xml
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+```
+6. Add sdk configuration below the application tag in manifest file
+
+```xml
     <uses-sdk
         android:minSdkVersion="23"
         tools:overrideLibrary="com.valueappz.flutter_notification_plugin" />
+```
+7. Add service in the manifest file as well
+
+```xml
     <service android:name="com.valueappz.flutter_notification_plugin.FlutterForegroundService" />
 ```

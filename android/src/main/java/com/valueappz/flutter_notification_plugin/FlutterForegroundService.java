@@ -19,15 +19,13 @@ import androidx.core.app.NotificationCompat;
 
 
 public class FlutterForegroundService extends Service {
-    private static String TAG = "FlutterForegroundService";
-    public static int ONGOING_NOTIFICATION_ID = 1;
     public static final String NOTIFICATION_CHANNEL_ID = "CHANNEL_ID";
     public static final String ACTION_STOP_SERVICE = "STOP";
-
-    private boolean userStopForegroundService = false;
-
+    public static int ONGOING_NOTIFICATION_ID = 1;
+    private static String TAG = "FlutterForegroundService";
     MediaPlayer mediaPlayer;
     Vibrator vibrator;
+    private boolean userStopForegroundService = false;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -73,7 +71,7 @@ public class FlutterForegroundService extends Service {
                     NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
                             "flutter_foreground_service_channel",
                             NotificationManager.IMPORTANCE_DEFAULT);
-                    channel.setSound(null,null);
+                    channel.setSound(null, null);
                     channel.enableVibration(false);
 
                     ((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
@@ -129,10 +127,12 @@ public class FlutterForegroundService extends Service {
             Log.d(TAG, "User close app, kill current process to avoid memory leak in other plugin.");
             android.os.Process.killProcess(android.os.Process.myPid());
         }
-        mediaPlayer.stop();
-        mediaPlayer.release();
-        mediaPlayer = null;
-        vibrator.cancel();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            vibrator.cancel();
+        }
     }
 
 

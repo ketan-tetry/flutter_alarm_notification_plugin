@@ -42,24 +42,26 @@ public class FlutterForegroundService extends Service {
         Bundle bundle = intent.getExtras();
         switch (action) {
             case FlutterNotificationPlugin.START_FOREGROUND_ACTION:
-                mediaPlayer = MediaPlayer.create(this, getSoundFile(bundle.getString("sound")));
-                mediaPlayer.setLooping(true); // Set looping
-                mediaPlayer.setVolume(10, 10);
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        stopSelf();
-                    }
-                });
+                if(mediaPlayer == null) {
+                    mediaPlayer = MediaPlayer.create(this, getSoundFile(bundle.getString("sound")));
+                    mediaPlayer.setLooping(true); // Set looping
+                    mediaPlayer.setVolume(10, 10);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            stopSelf();
+                        }
+                    });
 
-                mediaPlayer.start();
-                vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                // Vibrate for 500 milliseconds
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createWaveform(new long[]{300, 300, 300, 1000}, VibrationEffect.EFFECT_DOUBLE_CLICK));
-                } else {
-                    //deprecated in API 26
-                    vibrator.vibrate(500);
+                    mediaPlayer.start();
+                    vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    // Vibrate for 500 milliseconds
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createWaveform(new long[]{300, 300, 300, 1000}, VibrationEffect.EFFECT_DOUBLE_CLICK));
+                    } else {
+                        //deprecated in API 26
+                        vibrator.vibrate(500);
+                    }
                 }
 
                 PackageManager pm = getApplicationContext().getPackageManager();

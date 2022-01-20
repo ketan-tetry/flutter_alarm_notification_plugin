@@ -41,5 +41,4 @@
 
         <service android:name="com.valueappz.flutter_notification_plugin.FlutterForegroundService" />
     </application>
-    <uses-sdk android:minSdkVersion="23" />
 </manifest>
